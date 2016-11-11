@@ -863,6 +863,54 @@ ul.tag-in li a {
     margin: 1em 0;
 }
 
+.item-grid1 {
+    padding-bottom: 2em;
+}
+
+h4.cate {
+    font-family: 'Ubuntu-Regular';
+    font-size: 1.7em;
+    color: #F67777;
+}
+
+.menu-drop {
+    width: auto;
+    height: auto;
+    padding: 0;
+    list-style: none;
+    margin: 0.5em 0;
+}
+
+.menu-drop > li > a {
+    width: 100%;
+    margin: 0.3em 0;
+    display: inline-block;
+    position: relative;
+    color: #000;
+    font-size: 0.9em;
+    text-decoration: none;
+    font-family: 'Oxygen-Bold';
+}
+
+ul.kid-menu li, ul.cute li {
+    list-style: none;
+}
+
+.menu-drop ul li a {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    font-size: 0.8em;
+    margin: 0.3em 0;
+    color: #C7C7C7;
+    text-decoration: none;
+    text-indent: 1.2em;
+}
+
+.product-bottom {
+    padding-top: 2em;
+}
+
 @media(max-width:1000px){
     .header-login {
         margin-left: 24%;
