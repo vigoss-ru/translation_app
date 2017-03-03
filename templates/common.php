@@ -18,37 +18,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- MY App -->
 <link href="<?php echo $BASE_URL; ?>css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="<?php echo $BASE_URL; ?>css/style4.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="<?php echo $BASE_URL; ?>css/main.css" rel="stylesheet" type="text/css" media="all"/>
+<!--- Angular JS ---->
+<script src="<?php echo $BASE_URL; ?>js/angular/angular.min.js"></script>
+<script src="<?php echo $BASE_URL; ?>js/angular/angular-route.min.js"></script>
+<script src="<?php echo $BASE_URL; ?>js/angular/angular-animate.min.js" ></script>
 <!--- start-rate---->
 <script src="<?php echo $BASE_URL; ?>js/jstarbox.js"></script>
 <link rel="stylesheet" href="<?php echo $BASE_URL; ?>css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
-<script type="text/javascript">
-	jQuery(function() {
-		jQuery('.starbox').each(function() {
-			var starbox = jQuery(this);
-			starbox.starbox({
-				average: starbox.attr('data-start-value'),
-				changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
-				ghosting: starbox.hasClass('ghosting'),
-				autoUpdateAverage: starbox.hasClass('autoupdate'),
-				buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
-				stars: starbox.attr('data-star-count') || 5
-			}).bind('starbox-value-changed', function(event, value) {
-				if(starbox.hasClass('random')) {
-					var val = Math.random();
-					starbox.next().text(' '+val);
-					return val;
-				}
-			})
-		});
-	});
-</script>
 <!---//End-rate---->
 <!--light-box-files -->
 <script src="<?php echo $BASE_URL; ?>js/jquery.chocolat.js"></script>
 <link rel="stylesheet" href="<?php echo $BASE_URL; ?>css/chocolat.css" type="text/css" media="screen" charset="utf-8">
-<script type="text/javascript" charset="utf-8">
-	$(function() {
-		$('a.picture').Chocolat();
-	});
+
+<script>
+	setTimeout(function(){
+		jQuery(function() {
+			jQuery('a.picture').Chocolat();
+		});
+
+		jQuery(function() {
+			jQuery('.starbox').each(function() {
+				var starbox = jQuery(this);
+				starbox.starbox({
+					average: starbox.attr('data-start-value'),
+					changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
+					ghosting: starbox.hasClass('ghosting'),
+					autoUpdateAverage: starbox.hasClass('autoupdate'),
+					buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
+					stars: starbox.attr('data-star-count') || 5
+				}).bind('starbox-value-changed', function(event, value) {
+					if(starbox.hasClass('random')) {
+						var val = Math.random();
+						starbox.next().text(' '+val);
+						return val;
+					}
+				})
+			});
+		});
+
+	}, 1000);
 </script>
 

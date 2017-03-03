@@ -11,9 +11,6 @@
 <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 <!-- Angular JS -->
 
-<script src="<?php echo $BASE_URL; ?>js/angular/angular.min.js"></script>
-<script src="<?php echo $BASE_URL; ?>js/angular/angular-route.min.js"></script>
-<script src="<?php echo $BASE_URL; ?>js/angular/angular-animate.min.js" ></script>
 <script src="<?php echo $BASE_URL; ?>js/angular/toaster.js"></script>
 <script src="<?php echo $BASE_URL; ?>js/app/app.js"></script>
 <script src="<?php echo $BASE_URL; ?>js/app/data.js"></script>

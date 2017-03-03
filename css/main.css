@@ -1,0 +1,29 @@
+.product-row {
+    display: inline-block;
+    width: 100%;
+}
+
+body a {
+    cursor: hand;
+}
+
+.pagination > .active > a {
+    background-color: #F67777;
+    border-color: #F67777;
+}
+
+.pagination > li > a {
+    color: #F67777;
+}
+
+.glyphicon-sort:before {
+    content: "\e150";
+    margin-top: 8px;
+    margin-right: 8px;
+    cursor: hand;
+    display: block;
+}
+
+.product-sort {
+    display: flex;
+}

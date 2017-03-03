@@ -18,6 +18,13 @@ class DbHandler {
         return $result = $r->fetch_assoc();    
     }
     /**
+     * Fetching many records
+     */
+    public function getManyRecords($query) {
+        $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+        return $r;
+    }
+    /**
      * Creating new record
      */
     public function insertIntoTable($obj, $column_names, $table_name) {

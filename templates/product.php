@@ -1,4 +1,4 @@
-<html>
+<html ng-app="articleList">
     <head>
         <title>Shopin A Ecommerce Product Lists</title>
         <?php include 'common.php'; ?>
@@ -86,210 +86,81 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="mid-popular">
+                <div class="mid-popular" ng-controller="articleListCrtl">
 
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
+                    <div class="product-row item-grid1">
+                        <div class="col-md-3">
+                            PageSize:
+                            <select ng-model="entryLimit" class="form-control">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            Filter:<input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            Sort by:
+                            <div class="product-sort">
+                                <i class="glyphicon glyphicon-sort" ng-click="sort_by(true)"></i>
+                                <select class="form-control" id="product-sorting" ng-change="sort_by(false)" ng-model="sortData.model">
+                                    <option ng-repeat="option in sortData.availableOptions" value="{{option.id}}">{{option.name}}</option>
+                                </select>
                             </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="single.php">Set up perspiciati</a></h6>
+                        </div>
+                    </div>
+
+                    <div class="product-row" ng-show="filteredItems > 0">
+                        <div class="col-md-4 item-grid1 simpleCart_shelfItem"
+                             ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+
+                            <div class="mid-pop">
+                                <div class="pro-img">
+                                    <img ng-src="<?php echo $BASE_URL; ?>{{data.image_link}}" class="img-responsive" alt="">
+                                    <div class="zoom-icon">
+                                        <a class="picture" href="<?php echo $BASE_URL; ?>{{data.image_link}}" rel="title" class="b-link-stripe b-animate-go thickbox">
+                                            <i class="glyphicon glyphicon-search icon"></i>
+                                        </a>
+                                        <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
                                     </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
+                                <div class="mid-1">
+                                    <div class="women">
+                                        <div class="women-top">
+                                            <span>Women</span>
+                                            <h6><a href="single.php">{{data.article_name}}</a></h6>
+                                        </div>
+                                        <div class="img item_add">
+                                            <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <div class="mid-2">
+                                        <p><label>${{data.article_price_origin}}</label><em class="item_price">${{data.article_price_discount}}</em></p>
+                                        <div class="block">
+                                            <div class="starbox small ghosting"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc1.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc1.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="<?php echo $BASE_URL; ?>single.php">At vero eos</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="product-row" ng-show="filteredItems == 0">
+                        <h4> No customers found </h4>
                     </div>
 
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc2.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc2.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="single.php">At vero eos</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
+                    <div class="product-row" ng-show="filteredItems > 0">
+                        <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems"
+                             items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;">
                         </div>
                     </div>
-
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc3.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc3.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="single.php">At vero eos</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc4.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc4.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="single.php">At vero eos</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 item-grid1 simpleCart_shelfItem">
-                        <div class="mid-pop">
-                            <div class="pro-img">
-                                <img src="<?php echo $BASE_URL; ?>images/pc5.jpg" class="img-responsive" alt="">
-                                <div class="zoom-icon">
-                                    <a class="picture" href="<?php echo $BASE_URL; ?>images/pc5.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                                        <i class="glyphicon glyphicon-search icon"></i>
-                                    </a>
-                                    <a href="single.php"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                                </div>
-                            </div>
-                            <div class="mid-1">
-                                <div class="women">
-                                    <div class="women-top">
-                                        <span>Women</span>
-                                        <h6><a href="single.php">At vero eos</a></h6>
-                                    </div>
-                                    <div class="img item_add">
-                                        <a href="#"><img src="<?php echo $BASE_URL; ?>images/ca.png" alt=""></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="mid-2">
-                                    <p><label>$100.00</label><em class="item_price">$70.00</em></p>
-                                    <div class="block">
-                                        <div class="starbox small ghosting"></div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
             </div>
-
         </div>
     </div>
     <!-- end content -->
@@ -299,6 +170,8 @@
 
     <!-- footer -->
     <?php include 'footer.php'; ?>
-
     </body>
+
+    <script src="<?php echo $BASE_URL; ?>js/app/article.js"></script>
+    <script src="<?php echo $BASE_URL; ?>js/ui-bootstrap-tpls-0.10.0.min.js"></script>
 </html>
